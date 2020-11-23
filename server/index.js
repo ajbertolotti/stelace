@@ -22,7 +22,8 @@ const cors = corsMiddleware({
     'x-stelace-version',
     'authorization',
     'user-agent',
-    'x-stelace-organization-id'
+    'x-stelace-organization-id',
+    'x-api-version',
   ],
   exposeHeaders: [
     'x-stelace-version',
