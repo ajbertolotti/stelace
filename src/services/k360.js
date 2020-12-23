@@ -117,12 +117,12 @@ function start ({ communication }) {
 
     const k360Id = req.k360Id
 
-    const category = await K360.query().findById(k360Id)
-    if (!category) {
+    const myk360 = await K360.query().findById(k360Id)
+    if (!myk360) {
       throw createError(404)
     }
 
-    return K360.expose(category, { req })
+    return K360.expose(myk360, { req })
   })
 
   responder.on('create', async (req) => {
@@ -134,7 +134,8 @@ function start ({ communication }) {
       name,
       parentId,
       metadata,
-      platformData
+      platformData,
+      myData
     } = req
 
     const myk360 = await K360.query().insert({
@@ -142,10 +143,11 @@ function start ({ communication }) {
       name,
       parentId,
       metadata,
-      platformData
+      platformData,
+      myData
     })
 
-    publisher.publish('categoryCreated', {
+    publisher.publish('k360Created', {
       myk360,
       eventDate: myk360.createdDate,
       platformId,
@@ -196,6 +198,9 @@ function start ({ communication }) {
     if (platformData) {
       updateAttrs.platformData = K360.rawJsonbMerge('platformData', platformData)
     }
+    if (myData) {
+      updateAttrs.myData = K360.rawJsonbMerge('myData', myData)
+    }
 
     myK360 = await K360.query().patchAndFetchById(k360Id, updateAttrs)
 
@@ -230,7 +235,7 @@ function start ({ communication }) {
 
     await K360.query().deleteById(k360Id)
 
-    publisher.publish('categoryDeleted', {
+    publisher.publish('k360Deleted', {
       k360Id,
       myk360,
       eventDate: new Date().toISOString(),

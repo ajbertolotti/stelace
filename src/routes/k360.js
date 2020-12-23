@@ -55,7 +55,7 @@ function init (server, { middlewares, helpers } = {}) {
 
     const params = populateRequesterParams(req)({
       type: 'read',
-      categoryId: id
+      k360Id: id
     })
 
     const result = await requester.send(params)
@@ -106,7 +106,7 @@ function init (server, { middlewares, helpers } = {}) {
 
     const params = populateRequesterParams(req)({
       type: 'update',
-      categoryId: id,
+      k360Id: id,
       name,
       parentId,
       myData,
@@ -128,7 +128,7 @@ function init (server, { middlewares, helpers } = {}) {
 
     const params = populateRequesterParams(req)({
       type: 'remove',
-      categoryId: id
+      k360Id: id
     })
 
     const result = await requester.send(params)

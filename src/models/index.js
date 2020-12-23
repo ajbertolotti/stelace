@@ -46,6 +46,7 @@ const mapIdPrefixToModelNames = {
   [models.AssetType.idPrefix]: 'AssetType',
   [models.Availability.idPrefix]: 'Availability',
   [models.Category.idPrefix]: 'Category',
+  [models.K360.idPrefix]: 'K360',
   [models.CustomAttribute.idPrefix]: 'CustomAttribute',
   [models.Entry.idPrefix]: 'Entry',
   [models.Message.idPrefix]: 'Message',

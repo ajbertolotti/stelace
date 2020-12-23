@@ -50,11 +50,23 @@ schemas['2019-05-20'].create = {
     platformData: Joi.object().unknown()
   }).required()
 }
+
+schemas['2019-05-20'].update = {
+  params: objectIdParamsSchema,
+  body: schemas['2019-05-20'].create.body
+    // .fork('name', schema => schema.optional())
+    // .fork(['name', 'myData'], schema => schema.optional())
+    .fork(['name', 'myData'], schema => schema.forbidden())
+
+}
+
+/*
 schemas['2019-05-20'].update = {
   params: objectIdParamsSchema,
   body: schemas['2019-05-20'].create.body
     .fork('name', schema => schema.optional())
 }
+*/
 schemas['2019-05-20'].remove = {
   params: objectIdParamsSchema
 }
