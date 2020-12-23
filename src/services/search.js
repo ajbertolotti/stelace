@@ -30,6 +30,7 @@ let configRequester
 const activeInFilterRegex = builtInUsedInFilterRegex('_active')
 const validatedInFilterRegex = builtInUsedInFilterRegex('_validated')
 const categoryIdInFilterRegex = builtInUsedInFilterRegex('_categoryId')
+const k360IdInFilterRegex = builtInUsedInFilterRegex('_k360Id')
 const assetTypeIdInFilterRegex = builtInUsedInFilterRegex('_assetTypeId')
 const whitespaceInQueryRegex = /\s/
 
@@ -109,6 +110,7 @@ function start ({ communication, isSystem }) {
     const {
       query,
       categoryId,
+      k360Id,
       assetTypeId,
       location,
       maxDistance = defaultMaxDistance,
@@ -210,6 +212,13 @@ function start ({ communication, isSystem }) {
     if (categoryId && categoryId.length && !categoryIdInFilter) {
       bool.filter.push({
         terms: { categoryId }
+      })
+    }
+
+    const k360IdInFilter = hasFilter && checkFilterBuiltIn(filter, k360IdInFilterRegex)
+    if (k360Id && k360Id.length && !k360IdInFilter) {
+      bool.filter.push({
+        terms: { k360Id }
       })
     }
 

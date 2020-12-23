@@ -33,6 +33,7 @@ const models = {
   WebhookLog: require('./WebhookLog'),
   Workflow: require('./Workflow'),
   WorkflowLog: require('./WorkflowLog'),
+  K360: require('./K360'),
 
   InternalAvailability: require('./InternalAvailability')
 }

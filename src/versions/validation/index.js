@@ -30,7 +30,8 @@ const validationVersions = [
   require('./transaction'),
   require('./user'),
   require('./webhook'),
-  require('./workflow')
+  require('./workflow'),
+  require('./k360')
 ]
 const customValidationVersions = []
 

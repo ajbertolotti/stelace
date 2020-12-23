@@ -135,6 +135,7 @@ const availabilityFilterSchema = customJoi.object().keys({
 const searchSchema = customJoi.object().keys({
   query: customJoi.string().allow(''),
   categoryId: idsSchema,
+  k360Id: idsSchema,
   assetTypeId: idsSchema,
   location: locationSchema,
   maxDistance: customJoi.number().integer().min(1),

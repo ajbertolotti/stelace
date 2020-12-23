@@ -13,8 +13,8 @@ function init (server, { middlewares, helpers } = {}) {
   } = helpers
 
   server.get({
-    name: 'k360academydata.list',
-    path: '/k360academydata'
+    name: 'k360.list',
+    path: '/k360'
   }, checkPermissions([
     'category:list:all'
   ]), cache(), wrapAction(async (req, res) => {
@@ -28,7 +28,10 @@ function init (server, { middlewares, helpers } = {}) {
       'endingBefore',
 
       'id',
-      'myData',
+      'createdDate',
+      'updatedDate',
+      'parentId',
+      'myData'
     ]
 
     const payload = _.pick(req.query, fields)
@@ -39,13 +42,12 @@ function init (server, { middlewares, helpers } = {}) {
 
     params = Object.assign({}, params, payload)
 
-    const result = await requester.send(params)
-    return result
+    return requester.send(params)
   }))
 
   server.get({
-    name: 'k360academydata.read',
-    path: '/k360academydata/:id'
+    name: 'k360.read',
+    path: '/k360/:id'
   }, checkPermissions([
     'category:read:all'
   ]), wrapAction(async (req, res) => {
@@ -53,7 +55,7 @@ function init (server, { middlewares, helpers } = {}) {
 
     const params = populateRequesterParams(req)({
       type: 'read',
-      id: id
+      categoryId: id
     })
 
     const result = await requester.send(params)
@@ -61,18 +63,26 @@ function init (server, { middlewares, helpers } = {}) {
   }))
 
   server.post({
-    name: 'k360academydata.create',
-    path: '/k360academydata'
+    name: 'k360.create',
+    path: '/k360'
   }, checkPermissions([
     'category:create:all'
   ], { checkData: true }), wrapAction(async (req, res) => {
     const {
-      myData
+      name,
+      parentId,
+      myData,
+      metadata,
+      platformData
     } = req.body
 
     const params = populateRequesterParams(req)({
       type: 'create',
-      myData
+      name,
+      parentId,
+      myData,
+      metadata,
+      platformData
     })
 
     const result = await requester.send(params)
@@ -80,20 +90,28 @@ function init (server, { middlewares, helpers } = {}) {
   }))
 
   server.patch({
-    name: 'k360academydata.update',
-    path: '/k360academydata/:id'
+    name: 'k360.update',
+    path: '/k360/:id'
   }, checkPermissions([
     'category:edit:all'
   ], { checkData: true }), wrapAction(async (req, res) => {
     const { id } = req.params
     const {
+      name,
+      parentId,
       myData,
+      metadata,
+      platformData
     } = req.body
 
     const params = populateRequesterParams(req)({
       type: 'update',
-      id: id,
-      myData
+      categoryId: id,
+      name,
+      parentId,
+      myData,
+      metadata,
+      platformData
     })
 
     const result = await requester.send(params)
@@ -101,8 +119,8 @@ function init (server, { middlewares, helpers } = {}) {
   }))
 
   server.del({
-    name: 'k360academydata.remove',
-    path: '/k360academydata/:id'
+    name: 'k360.remove',
+    path: '/k360/:id'
   }, checkPermissions([
     'category:remove:all'
   ]), wrapAction(async (req, res) => {
@@ -110,7 +128,7 @@ function init (server, { middlewares, helpers } = {}) {
 
     const params = populateRequesterParams(req)({
       type: 'remove',
-      id: id
+      categoryId: id
     })
 
     const result = await requester.send(params)
@@ -122,8 +140,8 @@ function start ({ communication }) {
   const { getRequester } = communication
 
   requester = getRequester({
-    name: 'K360academydata route > K360academydata Requester',
-    key: 'k360academydata'
+    name: 'K360 route > K360 Requester',
+    key: 'k360'
   })
 }
 

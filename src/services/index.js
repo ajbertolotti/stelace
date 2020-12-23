@@ -25,7 +25,8 @@ const services = {
   transaction: require('./transaction'),
   user: require('./user'),
   webhook: require('./webhook'),
-  workflow: require('./workflow')
+  workflow: require('./workflow'),
+  k360: require('./k360')
 }
 
 function init (...args) {

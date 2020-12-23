@@ -1,8 +1,8 @@
 const Base = require('./Base')
 
-class K360academydata extends Base {
+class K360 extends Base {
   static get tableName () {
-    return 'k360academydata'
+    return 'k360'
   }
 
   static get idPrefix () {
@@ -16,9 +16,29 @@ class K360academydata extends Base {
         id: {
           type: 'string'
         },
+        createdDate: {
+          type: 'string',
+          maxLength: 24
+        },
+        updatedDate: {
+          type: 'string',
+          maxLength: 24
+        },
+        name: {
+          type: 'string',
+          maxLength: 255
+        },
+        parentId: {
+          type: ['string', 'null'],
+          default: null
+        },
         myData: {
           type: 'string',
-          default: 'algo'
+          maxLength: 255
+        },
+        metadata: {
+          type: 'object',
+          default: {}
         },
         platformData: {
           type: 'object',
@@ -35,6 +55,7 @@ class K360academydata extends Base {
         'createdDate',
         'updatedDate',
         'name',
+        'parentId',
         'myData',
         'metadata',
         'platformData',
@@ -47,4 +68,4 @@ class K360academydata extends Base {
   }
 }
 
-module.exports = K360academydata
+module.exports = K360
